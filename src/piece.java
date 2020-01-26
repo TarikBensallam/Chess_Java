@@ -5,8 +5,12 @@ public abstract class piece {
 	protected ImageIcon icon;
 	protected Case case_l;
 	
+	// is it a good idea to add a player here 
+	
+	
 	protected piece(int x ,int y,Echiquier E) {
 		this.case_l = new Case(x,y,E);
+		
 	}
 	
 	// Get Icon
@@ -31,5 +35,6 @@ public abstract class piece {
 	public Case getCase() {
 		return this.case_l;
 	}
+	
 	
 }

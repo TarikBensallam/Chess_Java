@@ -43,8 +43,15 @@ public class king extends piece{
 				return false;
 			
 			if(this.getCase().getE().CanCastle(Location)) {
-				// we need to move the rook from it s square to it's supposed square
+				// Setting the rook in it's square
+				Location.E.cases[5][0].p=Location.E.cases[7][0].p;
+				Location.E.cases[5][0].p.setLocation(Location.E.cases[5][0]);
+				Location.E.cases[5][0].setIcon(Location.E.cases[7][0].getIcon());
+				// Setting the place of the rook empty
+				Location.E.cases[7][0].p=null;
+				Location.E.cases[7][0].setIcon(null);
 				
+			
 				return true;
 			}
 			return false;
@@ -57,7 +64,13 @@ public class king extends piece{
 				return false;
 			
 			if(this.getCase().getE().CanCastle(Location)) {
-				// we need to move the rook from it s square to it's supposed square
+				// Setting the rook in it's square
+				Location.E.cases[3][0].p=Location.E.cases[0][0].p;
+				Location.E.cases[3][0].p.setLocation(Location.E.cases[5][0]);
+				Location.E.cases[3][0].setIcon(Location.E.cases[7][0].getIcon());
+				// Setting the place of the rook empty
+				Location.E.cases[0][0].p=null;
+				Location.E.cases[0][0].setIcon(null);
 				
 				return true;
 			}
@@ -81,7 +94,13 @@ public class king extends piece{
 				
 				if(this.getCase().getE().CanCastle(Location)) {
 					// we need to move the rook from it s square to it's supposed square
-					
+					// Setting the rook in it's square
+					Location.E.cases[5][7].p=Location.E.cases[7][7].p;
+					Location.E.cases[5][7].p.setLocation(Location.E.cases[5][7]);
+					Location.E.cases[5][7].setIcon(Location.E.cases[7][7].getIcon());
+					// Setting the place of the rook empty
+					Location.E.cases[7][7].p=null;
+					Location.E.cases[7][7].setIcon(null);
 					return true;
 				}
 				return false;
@@ -95,7 +114,13 @@ public class king extends piece{
 				
 				if(this.getCase().getE().CanCastle(Location)) {
 					// we need to move the rook from it s square to it's supposed square
-					
+					// Setting the rook in it's square
+					Location.E.cases[3][7].p=Location.E.cases[0][7].p;
+					Location.E.cases[3][7].p.setLocation(Location.E.cases[5][7]);
+					Location.E.cases[3][7].setIcon(Location.E.cases[7][7].getIcon());
+					// Setting the place of the rook empty
+					Location.E.cases[0][7].p=null;
+					Location.E.cases[0][7].setIcon(null);
 					return true;
 				}
 				return false;

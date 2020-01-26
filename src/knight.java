@@ -25,6 +25,7 @@ public class knight extends piece{
 		int a,b,c,d,e,f,g,h,X,Y;
 		// When the destination has the same piece color as this piece
 				if(Location_dest.p!= null && this.couleur==Location_dest.p.couleur) return false;
+		// we need to add that it can't move unless the king is not in check , or it's move will make the king out of check
 		X=Location_dest.getX();
 		Y=Location_dest.getY();
 		a=X+2;

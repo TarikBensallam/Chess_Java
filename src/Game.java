@@ -3,9 +3,15 @@ import java.awt.*;
 import javax.swing.ImageIcon;
 public class Game extends JFrame{
 	public int click;
+	public Player PlayerW;
+	public Player PlayerB;
 	
 		// Starting a game
 		Game(){
+			
+			piece Wpieces[]= new piece[16];
+			piece Bpieces[]= new piece[16];
+			
 			this.setTitle("Jeu d'échecs");
 			this.setSize(1000,1000);
 			this.setLocationRelativeTo(null);
@@ -83,40 +89,84 @@ public class Game extends JFrame{
          			
          			// Setting pieces
          			E.getCases()[0][7].setP(B_R1);
+         			Bpieces[0]=B_R1;
          			E.getCases()[1][7].setP(B_K1);// Knight
+         			Bpieces[1]=B_K1;
          			E.getCases()[2][7].setP(B_B1);// Bishop
+         			Bpieces[2]=B_B1;
          			E.getCases()[3][7].setP(B_Q);// queen
+         			Bpieces[3]=B_Q;
          			E.getCases()[4][7].setP(B_King);// king
+         			Bpieces[4]=B_King;
          			E.getCases()[5][7].setP(B_B2);// bishop
+         			Bpieces[5]=B_B2;
          			E.getCases()[6][7].setP(B_K2);// knight
+         			Bpieces[6]=B_K2;
          			E.getCases()[7][7].setP(B_R2);// rook
+         			Bpieces[7]=B_R2;
          			E.getCases()[0][6].setP(B_P1);// pawn
+         			Bpieces[8]=B_P1;
          			E.getCases()[1][6].setP(B_P2);// pawn
+         			Bpieces[9]=B_P2;
          			E.getCases()[2][6].setP(B_P3);// pawn
+         			Bpieces[10]=B_P3;
          			E.getCases()[3][6].setP(B_P4);// pawn
+         			Bpieces[11]=B_P4;
          			E.getCases()[4][6].setP(B_P5);// pawn
+         			Bpieces[12]=B_P5;
          			E.getCases()[5][6].setP(B_P6);// pawn
+         			Bpieces[13]=B_P6;
          			E.getCases()[6][6].setP(B_P7);// pawn
+         			Bpieces[14]=B_P7;
          			E.getCases()[7][6].setP(B_P8);// pawn
+         			Bpieces[15]=B_P1;
          			
          			
          			E.getCases()[0][0].setP(W_R1);// rook
+         			Wpieces[0]=W_R1;
          			E.getCases()[1][0].setP(W_K1);// knight
+         			Wpieces[1]=W_K1;
          			E.getCases()[2][0].setP(W_B1);// bishop
+         			Wpieces[2]=W_B1;
          			E.getCases()[3][0].setP(W_Q);// king
+         			Wpieces[3]=W_Q;
          			E.getCases()[4][0].setP(W_King);// queen
+         			Wpieces[4]=W_King;
          			E.getCases()[5][0].setP(W_B2);// bishop
+         			Wpieces[5]=W_B2;
          			E.getCases()[6][0].setP(W_K2);// knight
+         			Wpieces[6]=W_K2;
          			E.getCases()[7][0].setP(W_R2);// rook
+         			Wpieces[7]=W_R2;
          			E.getCases()[0][1].setP(W_P1);// pawn
+         			Wpieces[8]=W_P1;
          			E.getCases()[1][1].setP(W_P2);// pawn
+         			Wpieces[9]=W_P2;
          			E.getCases()[2][1].setP(W_P3);// pawn
+         			Wpieces[10]=W_P3;
          			E.getCases()[3][1].setP(W_P4);// pawn
+         			Wpieces[11]=W_P4;
          			E.getCases()[4][1].setP(W_P5);// pawn
+         			Wpieces[12]=W_P5;
          			E.getCases()[5][1].setP(W_P6);// pawn
+         			Wpieces[13]=W_P6;
          			E.getCases()[6][1].setP(W_P7);// pawn
+         			Wpieces[14]=W_P7;
          			E.getCases()[7][1].setP(W_P8);// pawn
+         			Wpieces[15]=W_P1;
+         			
+         			this.PlayerW=new Player("white",W_King,Wpieces);
+        			this.PlayerB=new Player("black",B_King,Bpieces);
+        		
+        			PlayerW.setMyMove(true);
+        			PlayerB.setMyMove(false);
 			this.setContentPane(E);
 			this.setVisible(true);
+			
+			
+			
 		}
+		
+		// setter player
+	
 }

@@ -79,6 +79,7 @@ public class Echiquier extends JPanel {
 			this.add(this.cases[7][i]);
 		}
 		
+		
 	}
 	
 	

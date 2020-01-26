@@ -45,6 +45,7 @@ public class Case extends JButton implements ActionListener{
 				if(this.from_C.p.canMoveTo(this)) {
 					this.To_C=this;
 					System.out.println("Possible going to : "+To_C.x+","+To_C.y);
+					// we add the condition that the player can move
 					// Setting the new occupant of the new case
 					this.setP(this.from_C.getOccupant());
 					this.setIcon(this.from_C.p.getIcon());
@@ -52,6 +53,14 @@ public class Case extends JButton implements ActionListener{
 					// Setting the last case to null
 					this.from_C.setIcon(null);
 					this.from_C.p=null;
+					
+					king k=(king) this.getE().getCases()[4][0].p;
+					Case Ck=this.getE().getCases()[4][0];
+					if(Ck.p!=null) {
+						System.out.println("yes i'm in"+ Ck.p.couleur);
+					}
+					
+
 				}
 				else {
 					System.out.println("not possible");

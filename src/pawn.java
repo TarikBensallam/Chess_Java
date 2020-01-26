@@ -27,6 +27,9 @@ public class pawn extends piece{
 		System.out.println(X+","+Y);
 		//Pawn of white color
 		if(this.couleur=="white") {
+		// case of going straight up by two squares 
+		if(Location.from_C.getY()==1 && Location.from_C.getY() == Y-2 && Location.from_C.getX() == X && !this.getCase().getE().getCases()[X][Y-1].isOccupied()  && !this.getCase().getE().getCases()[X][Y].isOccupied())
+			return true;
 		// case of going straight up by one square
 		if(Location.from_C.getY() == Y-1 && Location.from_C.getX() == X  && !this.getCase().getE().getCases()[X][Y].isOccupied()) {
 			return true;
@@ -39,6 +42,10 @@ public class pawn extends piece{
 		}
 		//Pawn of black color
 		else {
+			//going straight up by two squares
+			if(Location.from_C.getY()==6 && Location.from_C.getY() == Y+2 && Location.from_C.getX() == X && !this.getCase().getE().getCases()[X+1][Y+1].isOccupied()  && !this.getCase().getE().getCases()[X][Y].isOccupied())
+				return true;
+			//going straight up by one square 
 			if(Location.from_C.getY() == Y+1 && Location.from_C.getX() == X  && !this.getCase().getE().getCases()[X][Y].isOccupied()) {
 				return true;
 			}
@@ -49,5 +56,6 @@ public class pawn extends piece{
 			}
 			}
 		}
+
 		}
 
