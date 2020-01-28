@@ -23,6 +23,9 @@ public class knight extends piece{
 	@Override
 	public boolean canMoveTo(Case Location_dest) {
 		int a,b,c,d,e,f,g,h,X,Y;
+		if(Location_dest.from_C.p==null)  // this is needed for the checkmate function , if not we have a problem with a null pointer
+			return false;
+		
 		// When the destination has the same piece color as this piece
 				if(Location_dest.p!= null && this.couleur==Location_dest.p.couleur) return false;
 		// we need to add that it can't move unless the king is not in check , or it's move will make the king out of check
@@ -36,14 +39,14 @@ public class knight extends piece{
 		f=Y+1;
 		g=Y-2;
 		h=Y-1;
-		if(Location_dest.from_C.getX() == a && Location_dest.from_C.getY() == h) return true;
-		if(Location_dest.from_C.getX() == a && Location_dest.from_C.getY() == f) return true;
-		if(Location_dest.from_C.getX() == b && Location_dest.from_C.getY() == g) return true;
-		if(Location_dest.from_C.getX() == b && Location_dest.from_C.getY() == e) return true;
-		if(Location_dest.from_C.getX() == c && Location_dest.from_C.getY() == h) return true;
-		if(Location_dest.from_C.getX() == c && Location_dest.from_C.getY() == f) return true;
-		if(Location_dest.from_C.getX() == d && Location_dest.from_C.getY() == g) return true;
-		if(Location_dest.from_C.getX() == d && Location_dest.from_C.getY() == e) return true;
+		if(Location_dest.from_C.getX() == a && Location_dest.from_C.getY() == h && !this.getCase().getE().PuttingKingInCheck(Location_dest.from_C,Location_dest)) return true;
+		if(Location_dest.from_C.getX() == a && Location_dest.from_C.getY() == f && !this.getCase().getE().PuttingKingInCheck(Location_dest.from_C,Location_dest)) return true;
+		if(Location_dest.from_C.getX() == b && Location_dest.from_C.getY() == g && !this.getCase().getE().PuttingKingInCheck(Location_dest.from_C,Location_dest)) return true;
+		if(Location_dest.from_C.getX() == b && Location_dest.from_C.getY() == e && !this.getCase().getE().PuttingKingInCheck(Location_dest.from_C,Location_dest)) return true;
+		if(Location_dest.from_C.getX() == c && Location_dest.from_C.getY() == h && !this.getCase().getE().PuttingKingInCheck(Location_dest.from_C,Location_dest)) return true;
+		if(Location_dest.from_C.getX() == c && Location_dest.from_C.getY() == f && !this.getCase().getE().PuttingKingInCheck(Location_dest.from_C,Location_dest)) return true;
+		if(Location_dest.from_C.getX() == d && Location_dest.from_C.getY() == g && !this.getCase().getE().PuttingKingInCheck(Location_dest.from_C,Location_dest)) return true;
+		if(Location_dest.from_C.getX() == d && Location_dest.from_C.getY() == e && !this.getCase().getE().PuttingKingInCheck(Location_dest.from_C,Location_dest)) return true;
 		return false;
 	}
 	

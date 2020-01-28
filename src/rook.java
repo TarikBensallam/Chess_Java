@@ -21,17 +21,20 @@ public class rook extends piece{
 
 	@Override
 	public boolean canMoveTo(Case Location_dest) {
+		if(Location_dest.from_C.p==null)  // this is needed for the checkmate function , if not we have a problem with a null pointer
+			return false;
+		
 		// Case can give us the x,y
-				Case Case1= this.getLocation();
-						int x = Case1.getX();
-						int y= Case1.getY();
+		Case Case1= Location_dest.from_C;
+		int x = Location_dest.from_C.getX();
+		int y= Location_dest.from_C.getY();
 						// When the destination has the same piece color as this piece
 						if(Location_dest.p!= null && this.couleur==Location_dest.p.couleur) return false;
 						// a rook can move vertically 
 						if(x==Location_dest.getX())
 						{	System.out.println("yes i got in here for x==location");
 							// we still need to check if that horizontal line is clear or not 
-							if(!this.getCase().getE().isClearX(Case1, Location_dest))
+							if(!this.getCase().getE().isClearX(Case1, Location_dest) || this.getCase().getE().PuttingKingInCheck(Location_dest.from_C,Location_dest))
 								return false;
 							this.setMoved();
 							return true;
@@ -39,7 +42,7 @@ public class rook extends piece{
 						else if(y==Location_dest.getY()) {
 							System.out.println("yes i got in here for y==location");
 							//need to check if the vertical line is clear or not
-							if(!this.getCase().getE().isClearY(Case1, Location_dest))
+							if(!this.getCase().getE().isClearY(Case1, Location_dest) || this.getCase().getE().PuttingKingInCheck(Location_dest.from_C,Location_dest))
 								return false;
 							this.setMoved();
 							return true;

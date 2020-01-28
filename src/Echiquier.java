@@ -92,7 +92,7 @@ public class Echiquier extends JPanel {
 		{
 			System.out.println("From : "+from.getX()+","+from.getY());
 			System.out.println("To : "+To.getX()+","+To.getY());
-			System.out.println("not on the same Y");
+			System.out.println("I'm in isClearY and i'm returning false 1");
 			return false;
 		}
 		
@@ -103,14 +103,18 @@ public class Echiquier extends JPanel {
 				p.setX(p.getX()+1); // we don't need to check the clickable case if occupied or not
 				for(;p.getX()!=To.getX();p.setX(p.getX()+1)) {
 					if(cases[p.getX()][p.getY()].isOccupied()) // if one of the cases before the TO case is occupied
-						return false;
+						{
+						System.out.println("I'm in isClearY and i'm returning false 2");
+						return false;}
 				}
 			}
-			else {
+			else if(To.getX()<from.getX()){
 				p.setX(p.getX()-1); // we don't need to check if our case is occupied
 				for(;p.getX()!=To.getX();p.setX(p.getX()-1)) { // when To is on the left 
 					if(cases[p.getX()][p.getY()].isOccupied())
-						return false;
+						{
+						System.out.println("I'm in isClearY and i'm returning false 3");
+						return false;}
 				}
 			}
 			return true ;
@@ -127,6 +131,7 @@ public class Echiquier extends JPanel {
 		// we need to check first if they are on the same Y file
 		System.out.println(Case.from_C.getY()+"===>"+To.getY());
 		if(from.getX()!=To.getX()) {
+			System.out.println("I'm in isClearX and i'm returning false 1");
 			return false;
 		}
 
@@ -139,17 +144,25 @@ public class Echiquier extends JPanel {
 					// P doesn't point on real cases in our board 
 					
 					if(cases[p.getX()][p.getY()].isOccupied()) // if one of the cases before the TO case is occupied
-						return false;
+						{
+						System.out.println("I'm in isClearX and i'm returning false 2");
+
+						return false;}
 				}
 			}
-			else {
+			else if(To.getY()<from.getY()) {
 				System.out.println("moving down");
 				p.setY(p.getY()-1); // we don't need to check if our case is occupied
 				for(;p.getY()!=To.getY();p.setY(p.getY()-1)) { // when To is on the left 
 					if(cases[p.getX()][p.getY()].isOccupied())
-						return false;
+						{
+						System.out.println("I'm in isClearX and i'm returning false 3");
+
+						return false;}
 				}
+				
 			}
+			
 			return true ;
 		 // we didn't check if the from or To case is occupied yet				
 		}
@@ -174,6 +187,8 @@ public class Echiquier extends JPanel {
 				for(;p.getY()!=To.getY();p.setX(p.getX()+1),p.setY(p.getY()+1)) {
 					
 					if (cases[p.getX()][p.getY()].isOccupied()) {
+						System.out.println("I'm in isClearDiagonale and i'm returning false 1");
+
 						return false;
 					}
 				}
@@ -183,7 +198,10 @@ public class Echiquier extends JPanel {
 				p.setY(p.getY()-1);
 				for(;p.getY()!=To.getY();p.setX(p.getX()+1),p.setY(p.getY()-1)) {
 				
-					if (cases[p.getX()][p.getY()].isOccupied()) return false;
+					if (cases[p.getX()][p.getY()].isOccupied()) {
+						System.out.println("I'm in isClearDiagonale and i'm returning false 2");
+
+						return false;}
 				}
 			}
 				if(To.getX()<from.getX() && To.getY()<from.getY()) { //left down
@@ -191,33 +209,41 @@ public class Echiquier extends JPanel {
 					p.setY(p.getY()-1);
 					for(;p.getY()!=To.getY();p.setX(p.getX()-1),p.setY(p.getY()-1)) {
 					
-						if (cases[p.getX()][p.getY()].isOccupied()) return false;
+						if (cases[p.getX()][p.getY()].isOccupied()) {
+							System.out.println("I'm in isClearDiagonale and i'm returning false 3");
+
+							return false;}
 					}
 				}
 				if(To.getX()<from.getX() && To.getY()>from.getY()) {// left top
 					p.setX(p.getX()-1);
 					p.setY(p.getY()+1);
 					for(;p.getY()!=To.getY();p.setX(p.getX()-1),p.setY(p.getY()+1)) {
-						if (cases[p.getX()][p.getY()].isOccupied()) return false;
+						if (cases[p.getX()][p.getY()].isOccupied()) {
+							System.out.println("I'm in isClearDiagonale and i'm returning false 4");
+
+							return false;}
 					}
 				}
 				// we didn't check if From , To cases are occupied or not 
 				return true;
 			}
 	
-	public boolean notMovingInCheck(Case Location) {
-
-		// our king is on Location.from_C 
+	public boolean notMovingInCheck(Case Location,String color) {
+		
+		 
 		// our king can actually move to the Location
 		// we check if in the horizontal line of Location exist a black piece that can attack us
 		Case p = new Case(Location.getX(),Location.getY(),Location.getE()); // this is our new location
 		int i=p.getX();
 		// we check on the right 
 		for(;i<7;i++) {
+			
 			p.setX(p.getX()+1);
+			
 			// if we find it occupied with a black piece that is rook or queen 
 			if(cases[p.getX()][p.getY()].isOccupied()) {
-				if(cases[p.getX()][p.getY()].p.couleur!=Location.from_C.p.couleur && (cases[p.getX()][p.getY()].p.getClass().getName()=="rook" || cases[p.getX()][p.getY()].p.getClass().getName()=="queen" ))
+				if(cases[p.getX()][p.getY()].p.couleur!=color && (cases[p.getX()][p.getY()].p.getClass().getName()=="rook" || cases[p.getX()][p.getY()].p.getClass().getName()=="queen" ))
 					return false;
 				else
 					break; // otherwise if we found one occupied and it s not harmful to the king we just quit the loop
@@ -227,10 +253,12 @@ public class Echiquier extends JPanel {
 		i=p.getX();
 		// we check on the left 
 				for(;i>0;i--) {
+					
 					p.setX(p.getX()-1);
+				
 					// if we find it occupied with a black piece that is rook or queen 
 					if(cases[p.getX()][p.getY()].isOccupied()) {
-						if(cases[p.getX()][p.getY()].p.couleur!=Location.from_C.p.couleur && (cases[p.getX()][p.getY()].p.getClass().getName()=="rook" || cases[p.getX()][p.getY()].p.getClass().getName()=="queen" ))
+						if(cases[p.getX()][p.getY()].p.couleur!=color && (cases[p.getX()][p.getY()].p.getClass().getName()=="rook" || cases[p.getX()][p.getY()].p.getClass().getName()=="queen" ))
 							return false;
 						else
 							break; // otherwise if we found one occupied and it s not harmful to the king we just quit the loop
@@ -245,7 +273,7 @@ public class Echiquier extends JPanel {
 			p.setY(p.getY()+1);
 			// if we find it occupied with a black piece that is rook or queen 
 			if(cases[p.getX()][p.getY()].isOccupied()) {
-				if(cases[p.getX()][p.getY()].p.couleur!=Location.from_C.p.couleur && (cases[p.getX()][p.getY()].p.getClass().getName()=="rook" || cases[p.getX()][p.getY()].p.getClass().getName()=="queen" ))
+				if(cases[p.getX()][p.getY()].p.couleur!=color && (cases[p.getX()][p.getY()].p.getClass().getName()=="rook" || cases[p.getX()][p.getY()].p.getClass().getName()=="queen" ))
 					return false;
 				else
 					break; // otherwise if we found one occupied and it s not harmful to the king we just quit the loop
@@ -258,7 +286,7 @@ public class Echiquier extends JPanel {
 			p.setY(p.getY()-1);
 			// if we find it occupied with a black piece that is rook or queen 
 			if(cases[p.getX()][p.getY()].isOccupied()) {
-				if(cases[p.getX()][p.getY()].p.couleur!=Location.from_C.p.couleur && (cases[p.getX()][p.getY()].p.getClass().getName()=="rook" || cases[p.getX()][p.getY()].p.getClass().getName()=="queen" ))
+				if(cases[p.getX()][p.getY()].p.couleur!=color && (cases[p.getX()][p.getY()].p.getClass().getName()=="rook" || cases[p.getX()][p.getY()].p.getClass().getName()=="queen" ))
 					return false;
 				else
 					break; // otherwise if we found one occupied and it s not harmful to the king we just quit the loop
@@ -273,7 +301,7 @@ public class Echiquier extends JPanel {
 		 p.setX(p.getX()+1);
 		 p.setY(p.getY()+1);
 		 if(cases[p.getX()][p.getY()].isOccupied()) {
-				if(cases[p.getX()][p.getY()].p.couleur!=Location.from_C.p.couleur && (cases[p.getX()][p.getY()].p.getClass().getName()=="bishop" || cases[p.getX()][p.getY()].p.getClass().getName()=="queen" ))
+				if(cases[p.getX()][p.getY()].p.couleur!=color && (cases[p.getX()][p.getY()].p.getClass().getName()=="bishop" || cases[p.getX()][p.getY()].p.getClass().getName()=="queen" ))
 					return false;
 				else
 					break; // otherwise if we found one occupied and it s not harmful to the king we just quit the loop
@@ -287,7 +315,7 @@ public class Echiquier extends JPanel {
 		 p.setX(p.getX()+1);
 		p.setY(p.getY()-1); 
 		if(cases[p.getX()][p.getY()].isOccupied()) {
-			if(cases[p.getX()][p.getY()].p.couleur!=Location.from_C.p.couleur && (cases[p.getX()][p.getY()].p.getClass().getName()=="bishop" || cases[p.getX()][p.getY()].p.getClass().getName()=="queen" ))
+			if(cases[p.getX()][p.getY()].p.couleur!=color && (cases[p.getX()][p.getY()].p.getClass().getName()=="bishop" || cases[p.getX()][p.getY()].p.getClass().getName()=="queen" ))
 				return false;
 			else
 				break; // otherwise if we found one occupied and it s not harmful to the king we just quit the loop
@@ -301,7 +329,7 @@ public class Echiquier extends JPanel {
 		p.setX(p.getX()-1);
 		p.setY(p.getY()-1);
 		if(cases[p.getX()][p.getY()].isOccupied()) {
-			if(cases[p.getX()][p.getY()].p.couleur!=Location.from_C.p.couleur && (cases[p.getX()][p.getY()].p.getClass().getName()=="bishop" || cases[p.getX()][p.getY()].p.getClass().getName()=="queen" ))
+			if(cases[p.getX()][p.getY()].p.couleur!=color && (cases[p.getX()][p.getY()].p.getClass().getName()=="bishop" || cases[p.getX()][p.getY()].p.getClass().getName()=="queen" ))
 				return false;
 			else
 				break; // otherwise if we found one occupied and it s not harmful to the king we just quit the loop
@@ -315,7 +343,7 @@ public class Echiquier extends JPanel {
 		p.setX(p.getX()-1);
 		p.setY(p.getY()+1);
 		if(cases[p.getX()][p.getY()].isOccupied()) {
-			if(cases[p.getX()][p.getY()].p.couleur!=Location.from_C.p.couleur && (cases[p.getX()][p.getY()].p.getClass().getName()=="bishop" || cases[p.getX()][p.getY()].p.getClass().getName()=="queen" ))
+			if(cases[p.getX()][p.getY()].p.couleur!=color && (cases[p.getX()][p.getY()].p.getClass().getName()=="bishop" || cases[p.getX()][p.getY()].p.getClass().getName()=="queen" ))
 				return false;
 			else
 				break; // otherwise if we found one occupied and it s not harmful to the king we just quit the loop
@@ -323,53 +351,57 @@ public class Echiquier extends JPanel {
 	 }
 	 // now we need to check if there's a knight in the area :3
 	 p = new Case(Location.getX(),Location.getY(),Location.getE());
-	 if(-1<(p.getX()+1) && (p.getX()+1)<8 && -1<p.getY()+2 && p.getY()+2<8 && cases[p.getX()+1][p.getY()+2].p!=null && cases[p.getX()+1][p.getY()+2].p.getClass().getName()=="knight" && cases[p.getX()+1][p.getY()+2].p.couleur!=Location.from_C.p.couleur  ) return false;
-	 if(-1<(p.getX()+2) && (p.getX()+2)<8 && -1<p.getY()+1 && p.getY()+1<8 && cases[p.getX()+2][p.getY()+1].p!=null && cases[p.getX()+2][p.getY()+1].p.getClass().getName()=="knight" && cases[p.getX()+2][p.getY()+1].p.couleur!=Location.from_C.p.couleur  ) return false;
-	 if(-1<(p.getX()+1) && (p.getX()+1)<8 && -1<p.getY()-2 && p.getY()-2<8 && cases[p.getX()+1][p.getY()-2].p!=null && cases[p.getX()+1][p.getY()-2].p.getClass().getName()=="knight" && cases[p.getX()+1][p.getY()-2].p.couleur!=Location.from_C.p.couleur  ) return false;
-	 if(-1<(p.getX()+2) && (p.getX()+2)<8 && -1<p.getY()-1 && p.getY()-1<8 && cases[p.getX()+2][p.getY()-1].p!=null && cases[p.getX()+2][p.getY()-1].p.getClass().getName()=="knight" && cases[p.getX()+2][p.getY()-1].p.couleur!=Location.from_C.p.couleur  ) return false;
-	 if(-1<(p.getX()-1) && (p.getX()-1)<8 && -1<p.getY()+2 && p.getY()+2<8 && cases[p.getX()-1][p.getY()+2].p!=null && cases[p.getX()-1][p.getY()+2].p.getClass().getName()=="knight" && cases[p.getX()-1][p.getY()+2].p.couleur!=Location.from_C.p.couleur  ) return false;
-	 if(-1<(p.getX()-2) && (p.getX()-2)<8 && -1<p.getY()+1 && p.getY()+1<8 && cases[p.getX()-2][p.getY()+1].p!=null && cases[p.getX()-2][p.getY()+1].p.getClass().getName()=="knight" && cases[p.getX()-2][p.getY()+1].p.couleur!=Location.from_C.p.couleur  ) return false;
-	 if(-1<(p.getX()-1) && (p.getX()-1)<8 && -1<p.getY()-2 && p.getY()-2<8 && cases[p.getX()-1][p.getY()-2].p!=null && cases[p.getX()-1][p.getY()-2].p.getClass().getName()=="knight" && cases[p.getX()-1][p.getY()-2].p.couleur!=Location.from_C.p.couleur  ) return false;
-	 if(-1<(p.getX()-2) && (p.getX()-2)<8 && -1<p.getY()-1 && p.getY()-1<8 && cases[p.getX()-2][p.getY()-1].p!=null && cases[p.getX()-2][p.getY()-1].p.getClass().getName()=="knight" && cases[p.getX()-2][p.getY()-1].p.couleur!=Location.from_C.p.couleur  ) return false;
+	 if(-1<(p.getX()+1) && (p.getX()+1)<8 && -1<p.getY()+2 && p.getY()+2<8 && cases[p.getX()+1][p.getY()+2].p!=null && cases[p.getX()+1][p.getY()+2].p.getClass().getName()=="knight" && cases[p.getX()+1][p.getY()+2].p.couleur!=color  ) return false;
+	 if(-1<(p.getX()+2) && (p.getX()+2)<8 && -1<p.getY()+1 && p.getY()+1<8 && cases[p.getX()+2][p.getY()+1].p!=null && cases[p.getX()+2][p.getY()+1].p.getClass().getName()=="knight" && cases[p.getX()+2][p.getY()+1].p.couleur!=color  ) return false;
+	 if(-1<(p.getX()+1) && (p.getX()+1)<8 && -1<p.getY()-2 && p.getY()-2<8 && cases[p.getX()+1][p.getY()-2].p!=null && cases[p.getX()+1][p.getY()-2].p.getClass().getName()=="knight" && cases[p.getX()+1][p.getY()-2].p.couleur!=color  ) return false;
+	 if(-1<(p.getX()+2) && (p.getX()+2)<8 && -1<p.getY()-1 && p.getY()-1<8 && cases[p.getX()+2][p.getY()-1].p!=null && cases[p.getX()+2][p.getY()-1].p.getClass().getName()=="knight" && cases[p.getX()+2][p.getY()-1].p.couleur!=color  ) return false;
+	 if(-1<(p.getX()-1) && (p.getX()-1)<8 && -1<p.getY()+2 && p.getY()+2<8 && cases[p.getX()-1][p.getY()+2].p!=null && cases[p.getX()-1][p.getY()+2].p.getClass().getName()=="knight" && cases[p.getX()-1][p.getY()+2].p.couleur!=color  ) return false;
+	 if(-1<(p.getX()-2) && (p.getX()-2)<8 && -1<p.getY()+1 && p.getY()+1<8 && cases[p.getX()-2][p.getY()+1].p!=null && cases[p.getX()-2][p.getY()+1].p.getClass().getName()=="knight" && cases[p.getX()-2][p.getY()+1].p.couleur!=color  ) return false;
+	 if(-1<(p.getX()-1) && (p.getX()-1)<8 && -1<p.getY()-2 && p.getY()-2<8 && cases[p.getX()-1][p.getY()-2].p!=null && cases[p.getX()-1][p.getY()-2].p.getClass().getName()=="knight" && cases[p.getX()-1][p.getY()-2].p.couleur!=color  ) return false;
+	 if(-1<(p.getX()-2) && (p.getX()-2)<8 && -1<p.getY()-1 && p.getY()-1<8 && cases[p.getX()-2][p.getY()-1].p!=null && cases[p.getX()-2][p.getY()-1].p.getClass().getName()=="knight" && cases[p.getX()-2][p.getY()-1].p.couleur!=color  ) return false;
 	 
 	 // we need to check for the pawns
 	p = new Case(Location.getX(),Location.getY(),Location.getE());
-	if(Location.from_C.p.couleur=="white") { //for white king
+	if(color=="white") { //for white king
 	if(-1<(p.getX()+1) && (p.getX()+1)<8 && -1<p.getY()+1 && p.getY()+1<8 && cases[p.getX()+1][p.getY()+1].isOccupied()) {
 		System.out.println("im in here !!!!!!!!");
-		if(cases[p.getX()+1][p.getY()+1].p.couleur!=Location.from_C.p.couleur && (cases[p.getX()+1][p.getY()+1].p.getClass().getName()=="pawn" ))
+		if(cases[p.getX()+1][p.getY()+1].p.couleur!=color && (cases[p.getX()+1][p.getY()+1].p.getClass().getName()=="pawn" ))
 			return false;}
 	if(-1<(p.getX()-1) && (p.getX()-1)<8 && -1<p.getY()+1 && p.getY()+1<8 && cases[p.getX()-1][p.getY()+1].isOccupied()) {
-		if(cases[p.getX()-1][p.getY()+1].p.couleur!=Location.from_C.p.couleur && (cases[p.getX()-1][p.getY()+1].p.getClass().getName()=="pawn" ))
+		if(cases[p.getX()-1][p.getY()+1].p.couleur!=color && (cases[p.getX()-1][p.getY()+1].p.getClass().getName()=="pawn" ))
 			return false;}
 	}
 	else { // for black king , not moving in front of pawns
 		if(-1<(p.getX()+1) && (p.getX()+1)<8 && -1<p.getY()-1 && p.getY()-1<8 && cases[p.getX()+1][p.getY()-1].isOccupied()) {
 			System.out.println("im in here !!!!!!!!");
-			if(cases[p.getX()+1][p.getY()-1].p.couleur!=Location.from_C.p.couleur && (cases[p.getX()+1][p.getY()-1].p.getClass().getName()=="pawn" ))
+			if(cases[p.getX()+1][p.getY()-1].p.couleur!=color && (cases[p.getX()+1][p.getY()-1].p.getClass().getName()=="pawn" ))
 				return false;}
 		if(-1<(p.getX()-1) && (p.getX()-1)<8 && -1<p.getY()-1 && p.getY()-1<8 && cases[p.getX()-1][p.getY()-1].isOccupied()) {
-			if(cases[p.getX()-1][p.getY()-1].p.couleur!=Location.from_C.p.couleur && (cases[p.getX()-1][p.getY()-1].p.getClass().getName()=="pawn" ))
+			if(cases[p.getX()-1][p.getY()-1].p.couleur!=color && (cases[p.getX()-1][p.getY()-1].p.getClass().getName()=="pawn" ))
 				return false;}
 	}
 		return true;
 	}
 
-	public boolean KingIsInCheck(Case LocationKing) {
+	/*public boolean KingIsInCheck(Case LocationKing) {
 		if(notMovingInCheck(LocationKing)) // if the square of the king is not attacked by any black piece 
 			return true;
 		return false;
-	}
+	}*/
 	public boolean CanCastle(Case Location) {
 		System.out.println("i'm in CanCastle ,  has moved ");
 		// King and rook haven't previously moved ++ need a counter in rook and king
+		int i;
+		if(Case.from_C.p.couleur=="white") i=0;
+		else
+			i=7;
 		if(Location.getX()==6) {
-		if(this.getCases()[7][0].p.getClass().getName()!="rook" || ((rook) this.getCases()[7][0].p).getMoved()) {
+		if(this.getCases()[7][i].p.getClass().getName()!="rook" || ((rook) this.getCases()[7][i].p).getMoved()) {
 			return false;
 				}
 		}
 		else if(Location.getX()==2) {
-			if(this.getCases()[0][0].p.getClass().getName()!="rook" || ((rook) this.getCases()[0][0].p).getMoved()) {
+			if(this.getCases()[0][i].p.getClass().getName()!="rook" || ((rook) this.getCases()[0][i].p).getMoved()) {
 				return false;
 					}
 			}
@@ -380,6 +412,90 @@ public class Echiquier extends JPanel {
 		// king may not castle if one of the squares is attacked
 		//king does not end up in check
 		
+		return false;
+	}
+	
+	public boolean PuttingKingInCheck(Case from_C,Case To_C) {
+		int check=0;
+		if(from_C.p==null)
+			System.out.println("i am th fromC empty "+from_C.getX()+" "+from_C.getY());
+		else
+			System.out.println("i am th fromC full "+from_C.getX()+" "+from_C.getY());
+		
+		String MovingPcolor=from_C.p.couleur; 
+		// need to find the location of the king in the board
+		Case WkCase=new Case(4,0,this),BkCase=new Case(4,7,this);
+		king Wk= (king) WkCase.p,Bk=(king) BkCase.p;
+		// Setting the new occupant of the new case
+				piece o = To_C.p; // to not loose the piece when we eat it
+				
+				To_C.setP(from_C.getOccupant());
+				To_C.setIcon(from_C.p.getIcon());
+				
+				if(o!=null && o.couleur==To_C.p.couleur)System.out.println("i'm the same thing");
+				// Setting the last case to null
+				from_C.setIcon(null);
+				from_C.p=null;
+		for(int i=0;i<8;i++) {
+			for(int j=0;j<8;j++) {
+			if(this.getCases()[i][j].p!=null && this.getCases()[i][j].p.getClass().getName()=="king" && this.getCases()[i][j].p.couleur=="white"  )
+				{
+			WkCase=this.getCases()[i][j];
+			 Wk=(king) WkCase.p;
+				}
+			if(this.getCases()[i][j].p!=null && this.getCases()[i][j].p.getClass().getName()=="king" && this.getCases()[i][j].p.couleur=="black"  )
+			{
+			 BkCase=this.getCases()[i][j];
+			 Bk=(king) BkCase.p;
+			}
+			}
+		}
+		// i need to set echiquier to the new position 
+		// Setting the new occupant of the new case
+		/*piece o = To_C.p; // to not loose the piece when we eat it
+		
+		To_C.setP(from_C.getOccupant());
+		To_C.setIcon(from_C.p.getIcon());
+		
+		if(o!=null && o.couleur==To_C.p.couleur)System.out.println("i'm the same thing");
+		// Setting the last case to null
+		from_C.setIcon(null);
+		from_C.p=null; */
+		
+		//i need to check if the king is going in check ,, condition 1 
+		if(MovingPcolor=="white")
+		{
+		System.out.println("i'm here to return white things like they were");
+		if(Wk.isInCheck(WkCase)) check=1;
+		from_C.p=To_C.p;
+		from_C.setIcon(To_C.getIcon());
+		
+		To_C.p=o;
+		if(o!=null)
+		To_C.setIcon(o.icon);
+		else
+			To_C.setIcon(null);
+		}
+	
+	if(MovingPcolor=="black" )
+	{
+		System.out.println("i'm here to return black things like they were");
+		if(Bk.isInCheck(BkCase)) check=1;
+	from_C.p=To_C.p;
+	from_C.setIcon(To_C.getIcon());
+	
+	To_C.p=o;
+	if(o!=null)
+	To_C.setIcon(o.icon);
+	else
+		To_C.setIcon(null);
+	}
+	
+
+		// I return the echiquier to how it was 
+		// i return true if condition 1 , false otherwise 
+	if(check==1) return true;
+	
 		return false;
 	}
 }

@@ -23,15 +23,18 @@ public class king extends piece{
 	@Override
 	public boolean canMoveTo(Case Location) {
 		int X,Y;
+		
 		X=Location.getX();
 		Y=Location.getY();
-		System.out.println(X+","+Y);
+		System.out.println("bbbbbbbbbbb "+X+","+Y);
 		//King of white color
 		if(this.couleur=="white") {
 		if((Location.from_C.getY() == Y-1 || Location.from_C.getY() == Y+1 || Location.from_C.getY() == Y) && (Location.from_C.getX() == X || Location.from_C.getX() == X-1 || Location.from_C.getX() ==X+1) && (!this.getCase().getE().getCases()[X][Y].isOccupied() || (this.getCase().getE().getCases()[X][Y].p.couleur=="black"))) {
-			if(this.getCase().getE().notMovingInCheck(Location)==false)
+			
+			if(this.getCase().getE().notMovingInCheck(Location,this.couleur)==false || this.getCase().getE().PuttingKingInCheck(Location.from_C,Location)==true )
 				return false;
 			this.setMoved();
+			System.out.println("ayayayayayayaya"+Location.from_C.getX()+" "+ Location.from_C.getY());
 			return true;
 		}
 		// we're going to add the castling 
@@ -81,7 +84,7 @@ public class king extends piece{
 		//King of black color
 		else {
 			if((Location.from_C.getY() == Y-1 || Location.from_C.getY() == Y+1 || Location.from_C.getY() == Y) && (Location.from_C.getX() == X || Location.from_C.getX() == X-1 || Location.from_C.getX() ==X+1)  && (!this.getCase().getE().getCases()[X][Y].isOccupied() || (this.getCase().getE().getCases()[X][Y].p.couleur=="white"))) {
-				if(this.getCase().getE().notMovingInCheck(Location)==false)
+				if(this.getCase().getE().notMovingInCheck(Location,this.couleur)==false || this.getCase().getE().PuttingKingInCheck(Location.from_C,Location)==true )
 					return false;
 				return true;
 			}
@@ -130,7 +133,7 @@ public class king extends piece{
 		
 	}
 	public boolean isInCheck(Case Location) {
-		if(!this.getCase().getE().notMovingInCheck(Location))
+		if(!this.getCase().getE().notMovingInCheck(Location,this.couleur))
 			return true;
 		return false;
 	}

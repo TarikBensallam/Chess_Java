@@ -21,15 +21,18 @@ public class bishop extends piece{
 	@Override
 	public boolean canMoveTo(Case Location_dest) {
 		// TODO Auto-generated method stub
-		Case Case1= this.getLocation();
-		int x = Case1.getX();
-		int y= Case1.getY();
+		if(Location_dest.from_C.p==null)  // this is needed for the checkmate function , if not we have a problem with a null pointer
+			return false;
+		
+		Case Case1= Location_dest.from_C;
+		int x = Location_dest.from_C.getX();
+		int y= Location_dest.from_C.getY();
 		// When the destination has the same piece color as this piece
 		if(Location_dest.p!= null && this.couleur==Location_dest.p.couleur) return false;
 		if(Math.abs(Location_dest.getX()-x)==Math.abs(Location_dest.getY()-y)) {
 			// need to check if that diagonal is clear or not
 			System.out.println("yes i am diagonaaaale lol");
-			if(!this.getCase().getE().isClearDiagonale(Case1, Location_dest))
+			if(!this.getCase().getE().isClearDiagonale(Case1, Location_dest) || this.getCase().getE().PuttingKingInCheck(Location_dest.from_C,Location_dest))
 				return false;
 			
 			return true;
